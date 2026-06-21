@@ -1,11 +1,14 @@
-export type Element = 'button' | 'empty state' | 'error message'
+export const ELEMENTS = ['button', 'empty state', 'error message'] as const
+export type Element = (typeof ELEMENTS)[number]
 
-export type Tone =
-  | 'friendly'
-  | 'formal'
-  | 'direct'
-  | 'encouraging'
-  | 'clear and reassuring'
+export const TONES = [
+  'friendly',
+  'formal',
+  'direct',
+  'encouraging',
+  'clear and reassuring',
+] as const
+export type Tone = (typeof TONES)[number]
 
 export type Variant = {
   text: string
