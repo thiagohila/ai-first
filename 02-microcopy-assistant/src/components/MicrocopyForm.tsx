@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from 'react'
-import { ELEMENTS, TONES } from '../lib/schema'
+import { ELEMENTS, TONES, isElement, isTone } from '../lib/schema'
 import type { Element, Tone } from '../lib/schema'
 
 type Props = {
@@ -26,7 +26,7 @@ export function MicrocopyForm({ onGenerate, isLoading }: Props) {
         <select
           id="element"
           value={element}
-          onChange={(e) => setElement(e.target.value as Element)}
+          onChange={(e) => isElement(e.target.value) && setElement(e.target.value)}
           className="border rounded px-3 py-2"
         >
           {ELEMENTS.map((el) => (
@@ -59,7 +59,7 @@ export function MicrocopyForm({ onGenerate, isLoading }: Props) {
         <select
           id="tone"
           value={tone}
-          onChange={(e) => setTone(e.target.value as Tone)}
+          onChange={(e) => isTone(e.target.value) && setTone(e.target.value)}
           className="border rounded px-3 py-2"
         >
           {TONES.map((t) => (

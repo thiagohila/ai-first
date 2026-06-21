@@ -10,6 +10,14 @@ export const TONES = [
 ] as const
 export type Tone = (typeof TONES)[number]
 
+export function isElement(v: string): v is Element {
+  return (ELEMENTS as readonly string[]).includes(v)
+}
+
+export function isTone(v: string): v is Tone {
+  return (TONES as readonly string[]).includes(v)
+}
+
 export type Variant = {
   text: string
   rationale: string
