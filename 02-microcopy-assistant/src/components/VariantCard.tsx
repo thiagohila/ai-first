@@ -19,13 +19,15 @@ export function VariantCard({ text, rationale }: Props) {
   }
 
   return (
-    <article className="flex flex-col gap-2 border rounded p-4">
-      <p className="font-medium">{text}</p>
-      <p className="text-sm text-gray-500">{rationale}</p>
+    <article className="bg-md-surface rounded-xl p-5 flex flex-col gap-2 shadow-el-1">
+      <p className="text-base font-medium text-md-on-surface">{text}</p>
+      <p className="text-sm text-md-on-surface-variant">{rationale}</p>
       <button
         type="button"
         onClick={handleCopy}
-        className="self-start text-sm border rounded px-3 py-1 hover:bg-gray-50"
+        className="self-start mt-1 bg-md-secondary-container text-md-on-secondary-container
+          rounded-full px-4 h-9 text-sm font-medium transition-shadow
+          hover:shadow-el-1 active:shadow-none cursor-pointer"
       >
         {copied ? 'Copied!' : 'Copy'}
       </button>

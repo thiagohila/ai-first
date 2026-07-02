@@ -4,8 +4,9 @@ type Props = {
 
 export function ErrorBanner({ message }: Props) {
   return (
-    <div role="alert" className="border border-red-300 bg-red-50 text-red-700 rounded p-4">
-      {message}
+    <div role="alert" className="bg-md-error-container text-md-on-error-container rounded-xl p-4 flex items-start gap-3">
+      <span className="text-md-error text-lg leading-5 shrink-0" aria-hidden="true">⚠</span>
+      <p className="text-sm">{message}</p>
     </div>
   )
 }
