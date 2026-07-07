@@ -1,14 +1,7 @@
-export const ELEMENTS = ['button', 'empty state', 'error message'] as const
-export type Element = (typeof ELEMENTS)[number]
-
-export const TONES = [
-  'friendly',
-  'formal',
-  'direct',
-  'encouraging',
-  'clear and reassuring',
-] as const
-export type Tone = (typeof TONES)[number]
+import { ELEMENTS, TONES } from '../../shared/constants'
+import type { Element, Tone } from '../../shared/constants'
+export { ELEMENTS, TONES }
+export type { Element, Tone }
 
 export function isElement(v: string): v is Element {
   return (ELEMENTS as readonly string[]).includes(v)
