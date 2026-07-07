@@ -28,14 +28,23 @@ Mastering the full stack of AI-native development:
 | # | Project | What it shows |
 |---|---------|---------------|
 | 01 | [extrator](./01-extrator) | Structured output → UI. An LLM as a function: text in, JSON out, rendered as interface. |
+| 02 | [microcopy-assistant](./02-microcopy-assistant) | Context engineering. Designing runtime context so an LLM behaves like a reliable UI component. |
 
 *(more landing here as I go)*
+
+## Fundamentos
+
+CS fundamentals I'm shoring up along the way — the stuff that doesn't show up in
+a demo but shows up in interviews and at scale:
+
+- [Algoritmos e Estruturas de Dados (com Big-O)](./algoritmos-e-estruturas) — measuring and comparing algorithms, not just making them work.
 
 ## Notes
 
 Short write-ups of things I figured out, as I figure them out:
 
-- *(coming soon)*
+- [I stopped treating LLMs like chatbots](./01-extrator/notes/post-01-structured-output.md)
+- [The AI skill nobody puts on their resume](./02-microcopy-assistant/notes/post-02-context-engineering.md)
 
 ---
 

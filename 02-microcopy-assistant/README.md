@@ -16,6 +16,10 @@ reliable UI component, not a chat box.
 - The split between **build-time context** (`CLAUDE.md`, for the agent that builds
   the app) and **runtime context** (`context-setup.md`, what the app sends the model).
 
+## Notes
+
+- [The AI skill nobody puts on their resume](./notes/post-02-context-engineering.md)
+
 ## Docs
 
 - `spec.md` — one-page spec and the output contract (source of truth)

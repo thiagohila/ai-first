@@ -27,6 +27,10 @@ a React setup and its own way to authenticate to the API.
 Right now this lives here as a **record of the pattern**, not a runnable app.
 A properly runnable version (with a real API integration) is planned later.
 
+## Notes
+
+- [I stopped treating LLMs like chatbots](./notes/post-01-structured-output.md)
+
 ## Status
 
 🅿️ Parked learning experiment. The pattern it teaches is reused across most
