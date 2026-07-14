@@ -48,6 +48,6 @@ Short write-ups of things I figured out, as I figure them out:
 
 ---
 
-**Find me:** <!-- TODO: coloque aqui seu LinkedIn / X / blog -->
+**Find me:** [X](https://x.com/thiago_hila) · [LinkedIn](https://www.linkedin.com/in/thiago-hila/)
 
 *Learning in public. If something here is useful — or wrong — tell me.*
