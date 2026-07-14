@@ -26,8 +26,23 @@ reliable UI component, not a chat box.
 - `context-setup.md` — the runtime context design (system prompt + few-shot + assembly + decisions)
 - `CLAUDE.md` — context for the agent that builds the app
 
+## Stack
+
+React 19 + TypeScript (strict) · Vite · Tailwind (Material Design 3 tokens) ·
+Vitest + Testing Library. Node ≥ 22.
+
+## Commands
+
+- `npm run dev`         — run locally
+- `npm test`            — client tests
+- `npm run test:server` — runtime-context tests (`server/`)
+- `npm run lint`        — lint
+- `npm run typecheck`   — type checking
+
 ## Status
 
-🛠️ Designed, not yet built. The spec and the full context strategy are done;
-the implementation (React + Vite + the API integration) comes later, in the
+🚧 Front end built, real API integration pending. The full flow works end to end
+against a **stub AI client** (`src/lib/ai.ts`): form → runtime-context assembly
+(`server/context.ts`) → 3 validated variants rendered as cards. What's left is
+swapping the stub for a real Anthropic API call — that lands in the
 build-with-the-API phase.

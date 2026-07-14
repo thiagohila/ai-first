@@ -5,7 +5,8 @@ Spec and output contract: see `spec.md` (source of truth).
 Runtime context design (system prompt + few-shot): see `context-setup.md`.
 
 ## Stack
-React + TypeScript (strict) · Vite · Tailwind · Anthropic SDK
+React + TypeScript (strict) · Vite · Tailwind
+AI client: currently a stub (`src/lib/ai.ts`); real Anthropic API call is pending.
 Tests: Vitest · Lint/format: ESLint + Prettier
 
 ## Commands
@@ -16,8 +17,11 @@ Tests: Vitest · Lint/format: ESLint + Prettier
 
 ## Structure
 - `src/components/`   — UI
-- `src/lib/ai.ts`     — API client and the model call
-- `src/lib/schema.ts` — the output contract (single source)
+- `src/hooks/`        — `useGenerateVariants` (idle/loading/success/error + request-id race guard)
+- `src/lib/ai.ts`     — `AiClient` interface + stub; the real model call slots in here
+- `src/lib/schema.ts` — the output contract + safe parser (single source)
+- `server/`           — runtime context in code (system prompt + few-shot + `buildMessages`)
+- `shared/`           — `ELEMENTS`/`TONES` shared between client and server
 
 ## Conventions
 - Functional components + hooks. No inline styles; Tailwind only.
