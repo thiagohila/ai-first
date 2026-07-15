@@ -1,3 +1,5 @@
+import type { Element, Tone } from '../shared/constants'
+
 type MessageParam = { role: 'user' | 'assistant'; content: string }
 
 export const SYSTEM_PROMPT = `You are a UX writing (microcopy) specialist. Your job is to generate short,
@@ -69,7 +71,7 @@ export const FEW_SHOT_MESSAGES: MessageParam[] = [
   },
 ]
 
-export function buildMessages(element: string, context: string, tone: string): MessageParam[] {
+export function buildMessages(element: Element, context: string, tone: Tone): MessageParam[] {
   return [
     ...FEW_SHOT_MESSAGES,
     { role: 'user', content: `element: ${element}\ncontext: ${context}\ntone: ${tone}` },
