@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import Anthropic from '@anthropic-ai/sdk'
 import { createApp, type MicrocopyClient } from './app'
+import { UpstreamError } from './errors'
 
 // Build an app around a fake client whose messages.create is fully controlled
 // by the test — this is how we exercise the route without a real API call.
@@ -72,24 +72,24 @@ describe('POST /api/generate — validation (400)', () => {
 })
 
 describe('POST /api/generate — error mapping', () => {
-  it('maps an Anthropic 429 to 429', async () => {
+  it('maps an UpstreamError rate limit (429) to 429', async () => {
     const app = appWith(async () => {
-      throw new Anthropic.APIError(429, undefined, 'rate limited', undefined)
+      throw new UpstreamError(429, 'rate limited')
     })
     const res = await post(app, VALID)
     expect(res.status).toBe(429)
     expect(await res.json()).toEqual({ error: expect.any(String) })
   })
 
-  it('maps other Anthropic SDK errors to 502', async () => {
+  it('maps other UpstreamErrors to 502', async () => {
     const app = appWith(async () => {
-      throw new Anthropic.APIError(500, undefined, 'server error', undefined)
+      throw new UpstreamError(502, 'bad gateway')
     })
     const res = await post(app, VALID)
     expect(res.status).toBe(502)
   })
 
-  it('maps unexpected (non-SDK) errors to 500', async () => {
+  it('maps unexpected (non-UpstreamError) errors to 500', async () => {
     const app = appWith(async () => {
       throw new Error('boom')
     })

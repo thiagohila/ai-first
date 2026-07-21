@@ -1,9 +1,9 @@
 import { Hono } from 'hono'
-import Anthropic from '@anthropic-ai/sdk'
 import { ELEMENTS, TONES } from '../shared/constants'
 import type { Element, Tone } from '../shared/constants'
 import { SYSTEM_PROMPT, buildMessages } from './context'
 import { rateLimit } from './rateLimit'
+import { UpstreamError } from './errors'
 
 /** Fast/cheap model — this task is short, structured extraction, not reasoning. */
 const MODEL = 'claude-haiku-4-5'
@@ -11,9 +11,10 @@ const MAX_TOKENS = 1024
 const MAX_CONTEXT_CHARS = 500
 
 /**
- * The slice of the Anthropic client the app depends on. Narrowing to this
- * makes the app trivial to test with a fake — no need to satisfy the full SDK
- * type. The real client (see server/index.ts) structurally satisfies it.
+ * The slice of the LLM client the app depends on — provider-neutral. Both the
+ * Anthropic and Gemini adapters (wired in server/index.ts) implement this shape,
+ * so the route never changes; only the injected instance does. Narrow on
+ * purpose: trivial to fake in tests, no need to satisfy a full SDK type.
  */
 export type MicrocopyClient = {
   messages: {
@@ -31,9 +32,11 @@ const isElement = (v: unknown): v is Element =>
 const isTone = (v: unknown): v is Tone =>
   typeof v === 'string' && (TONES as readonly string[]).includes(v)
 
-/** Map a thrown error to an HTTP status: Anthropic 429 → 429; other SDK → 502; unexpected → 500. */
+/** Map a thrown error to an HTTP status: upstream rate limit → 429; other upstream → 502; unexpected → 500. */
 function statusForError(err: unknown): 429 | 502 | 500 {
-  if (err instanceof Anthropic.APIError) {
+  // Provider-neutral: both adapters convert their errors to UpstreamError, so
+  // the route never depends on any single provider's error class.
+  if (err instanceof UpstreamError) {
     return err.status === 429 ? 429 : 502
   }
   return 500
