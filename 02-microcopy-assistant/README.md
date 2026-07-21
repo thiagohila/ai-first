@@ -39,6 +39,19 @@ Vitest + Testing Library. Node ≥ 22.
 - `npm run lint`        — lint
 - `npm run typecheck`   — type checking
 
+## Providers
+
+The backend can talk to either provider; the frontend is unchanged and never
+knows which one answered. Select it with an env var (see `.env.example`):
+
+- `LLM_PROVIDER` — `anthropic` (default) or `gemini`.
+- `ANTHROPIC_API_KEY` — required when `LLM_PROVIDER=anthropic`.
+- `GEMINI_API_KEY` — required when `LLM_PROVIDER=gemini` (optionally `GEMINI_MODEL`).
+
+Keys are **server-side only** (no `VITE_` prefix) so they never reach the browser
+bundle. The server fails fast with a clear message if the selected provider's key
+is missing.
+
 ## Status
 
 🚧 Front end built, real API integration pending. The full flow works end to end
