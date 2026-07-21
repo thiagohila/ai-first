@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { AnthropicAiClient } from './anthropicClient'
+import { HttpAiClient } from './httpAiClient'
 
-const client = new AnthropicAiClient()
+const client = new HttpAiClient()
 
 // Minimal fake of the parts of Response the client reads: status + json().
 function fakeRes(status: number, body?: unknown) {
@@ -20,7 +20,7 @@ const VALID_CONTENT = JSON.stringify({
 
 afterEach(() => vi.unstubAllGlobals())
 
-describe('AnthropicAiClient — status → Result mapping', () => {
+describe('HttpAiClient — status → Result mapping', () => {
   it('200 + valid JSON → ok', async () => {
     stubFetch(async () => fakeRes(200, { content: VALID_CONTENT }))
     const r = await client.generateVariants('button', 'a checkout button', 'friendly')
@@ -61,7 +61,7 @@ describe('AnthropicAiClient — status → Result mapping', () => {
   })
 })
 
-describe('AnthropicAiClient — request shape', () => {
+describe('HttpAiClient — request shape', () => {
   it('POSTs { element, context, tone } to /api/generate', async () => {
     const spy = stubFetch(async () => fakeRes(200, { content: VALID_CONTENT }))
     await client.generateVariants('empty state', 'no items yet', 'encouraging')

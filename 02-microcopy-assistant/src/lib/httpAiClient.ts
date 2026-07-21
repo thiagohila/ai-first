@@ -5,11 +5,12 @@ import type { Element, MicrocopyResponse, Result, Tone } from './schema'
 const ENDPOINT = '/api/generate'
 
 /**
- * Real AiClient: POSTs the request to the server proxy (which holds the API key
- * and calls Anthropic) and validates the returned model text with the shared
+ * Real AiClient: POSTs the request to the server (which holds the API key and
+ * calls whichever LLM provider LLM_PROVIDER selects — this client is
+ * provider-agnostic) and validates the returned model text with the shared
  * parser. Status → Result mapping mirrors the server's error contract.
  */
-export class AnthropicAiClient implements AiClient {
+export class HttpAiClient implements AiClient {
   async generateVariants(
     element: Element,
     context: string,

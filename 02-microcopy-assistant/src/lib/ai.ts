@@ -1,4 +1,5 @@
 import type { Element, MicrocopyResponse, Result, Tone } from './schema'
+import { HttpAiClient } from './httpAiClient'
 
 export interface AiClient {
   generateVariants(
@@ -52,4 +53,4 @@ export class FailingStubAiClient implements AiClient {
   }
 }
 
-export const defaultClient: AiClient = new StubAiClient()
+export const defaultClient: AiClient = new HttpAiClient()
