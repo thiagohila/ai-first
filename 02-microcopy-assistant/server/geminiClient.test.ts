@@ -42,10 +42,12 @@ describe('createGeminiClient — success & request shape', () => {
     const sent = JSON.parse(init.body) as {
       systemInstruction: { parts: { text: string }[] }
       contents: { role: string; parts: { text: string }[] }[]
+      generationConfig: { thinkingConfig?: { thinkingBudget?: number } }
     }
     expect(sent.systemInstruction.parts[0].text).toBe(SYSTEM_PROMPT)
     expect(sent.contents.some((c) => c.role === 'model')).toBe(true)
     expect(sent.contents[sent.contents.length - 1].role).toBe('user')
+    expect(sent.generationConfig.thinkingConfig?.thinkingBudget).toBe(0) // thinking disabled
   })
 })
 

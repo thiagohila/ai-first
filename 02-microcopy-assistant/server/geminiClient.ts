@@ -4,10 +4,12 @@ import type { MicrocopyClient } from './app'
 
 /**
  * Default Gemini model — configurable via the `model` arg (server/index.ts
- * passes GEMINI_MODEL). NOTE: verify the current model id against Google's docs
- * before real use; this default may be out of date.
+ * passes GEMINI_MODEL). The `-latest` alias tracks the current flash-lite model
+ * so it doesn't rot: pinned ids get retired for new keys (e.g. gemini-2.5-flash
+ * now 404s for new users). flash-lite is the fastest/cheapest tier — a good fit
+ * for short microcopy. Pin an explicit id via GEMINI_MODEL for reproducibility.
  */
-export const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash'
+export const DEFAULT_GEMINI_MODEL = 'gemini-flash-lite-latest'
 
 /** Minimal shape of the generateContent response we read (all optional — defensive). */
 type GeminiGenerateResponse = {
@@ -36,7 +38,13 @@ export function createGeminiClient(
         const requestBody = {
           systemInstruction: { parts: [{ text: params.system }] },
           contents: toGeminiContents(params.messages),
-          generationConfig: { maxOutputTokens: params.max_tokens },
+          generationConfig: {
+            maxOutputTokens: params.max_tokens,
+            // Disable "thinking": this is short, structured extraction, not
+            // reasoning. 3.x flash models think by default (~9s+); budget 0
+            // cuts latency sharply with no quality loss for this task.
+            thinkingConfig: { thinkingBudget: 0 },
+          },
         }
 
         let res: Response
